@@ -1,53 +1,50 @@
 package repository
 
 import (
-	"errors"
-
 	"github.com/Resul-Necefli/GoKick/internal/domain"
 )
 
-var (
-	ErrNotFound  = errors.New("campaign not found")
-	ErrDuplicate = errors.New("campaign with given ID already exists")
-)
-
 type InMemoryCampaignRepository struct {
-	data map[int]*domain.Campaign
+	Data map[int]*domain.Campaign
 }
 
 func (i *InMemoryCampaignRepository) Create(c *domain.Campaign) error {
 
-	if _, k := i.data[c.ID]; k {
-		return ErrDuplicate
+	if _, k := i.Data[c.ID]; k {
+		return domain.ErrDuplicate
 	}
 
-	i.data[c.ID] = c
+	i.Data[c.ID] = c
 	return nil
 }
 
 func (i *InMemoryCampaignRepository) FindByID(id int) (*domain.Campaign, error) {
 
-	if v := i.data[id]; v != nil {
+	if v, ok := i.Data[id]; ok {
 		return v, nil
 	}
 
-	return nil, ErrNotFound
+	return nil, domain.ErrNotFound
 
 }
 
-func (i *InMemoryCampaignRepository) FindAll() map[int]*domain.Campaign {
+func (i *InMemoryCampaignRepository) FindAll() (map[int]*domain.Campaign, error) {
 
-	return i.data
+	if i.Data == nil {
+		return nil, domain.ErrNotFound
+	}
+	return i.Data, nil
+
 }
 
 func (i *InMemoryCampaignRepository) Update(c *domain.Campaign) (*domain.Campaign, error) {
 
-	if v := i.data[c.ID]; v != nil {
-		i.data[c.ID] = c
+	if _, ok := i.Data[c.ID]; ok {
+		i.Data[c.ID] = c
 
-		return i.data[c.ID], nil
+		return i.Data[c.ID], nil
 	}
 
-	return nil, ErrNotFound
+	return nil, domain.ErrNotFound
 
 }
