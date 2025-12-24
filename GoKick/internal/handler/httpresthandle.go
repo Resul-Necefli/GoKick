@@ -43,8 +43,6 @@ func (c *CampaignHandle) CreateCampaign(w http.ResponseWriter, r *http.Request) 
 
 }
 
-// GetCampaignByID handles HTTP GET requests to retrieve a campaign by its numeric ID.
-// The handler expects the request URL path to be in the form "/listID/{id}" and parses
 func (c *CampaignHandle) GetCampaignByID(w http.ResponseWriter, r *http.Request) {
 
 	id := r.PathValue("id")
@@ -76,7 +74,6 @@ func (c *CampaignHandle) GetCampaignByID(w http.ResponseWriter, r *http.Request)
 }
 
 func (c *CampaignHandle) ListCampaigns(w http.ResponseWriter, r *http.Request) {
-	// yalniz ozune aid olan lar list edilmelidir heleki o mentiqde islemir amma bunu hisseler duzeldilmelidir
 	campaigns, err := c.service.ListCampaigns()
 	if err != nil {
 		log.Println("[service ListCampaigns] error :", err)

@@ -26,7 +26,6 @@ func main() {
 	mux.HandleFunc("PUT /campaigns/{id}", handler.UpdateDetails)
 	mux.HandleFunc("POST /campaigns/{id}/donate", handler.DonateHandler)
 
-	log.Println("Server 8080 portunda işə düşdü...")
 	log.Fatal(http.ListenAndServe(":8080", mux))
 
 }

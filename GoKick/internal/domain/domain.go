@@ -19,12 +19,6 @@ type Campaign struct {
 	Status        CampaignStatus `json:"status"`
 }
 
-// AddDonation adds a donation amount to the campaign's current amount.
-// It checks if the campaign is active and not finished before adding the amount.
-// If the campaign is not active, it returns an error indicating that the campaign is not active.
-// If the campaign is finished, it updates the campaign status to finished and returns an error indicating that the campaign is already finished.
-// Returns nil if the donation is successfully added.
-
 func (c *Campaign) AddDonation(amount float64) error {
 
 	if c.Status != CampaignStatusActive {
